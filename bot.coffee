@@ -35,7 +35,7 @@ bot.connect(room);
 
 bot.on('roomJoin', () ->
   console.log("Connected!");
-  bot.chat welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)]
+  #bot.chat welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)]
 
   ###
   bot.chat('i like turtles')
@@ -132,8 +132,12 @@ djAdvanceHandler = (data) ->
 
     if enableAutoSkip
         autoSkipTimeout = setTimeout userSkip, (data.media.duration + 3)* 1000
-        
-
+    
+    bot.getWaitList((data) ->
+        nextDJ = data[0]
+        nextDJ.getNextMedia((data) ->
+            if data.inHistory
+                bot.chat "@" + currentDJ.username + " your next song has already been played. Please choose another song."
 
 
 
